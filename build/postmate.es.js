@@ -116,9 +116,10 @@ function () {
     }
 
     this.listener = function (e) {
-      var _ref = ((e || {}).data || {}).value || {},
-          data = _ref.data,
-          name = _ref.name;
+      if (!sanitize(e, _this.childOrigin)) return false;
+      var _e$data$value = e.data.value,
+          data = _e$data$value.data,
+          name = _e$data$value.name;
 
       if (e.data.postmate === 'emit') {
         if (process.env.NODE_ENV !== 'production') {
@@ -283,11 +284,11 @@ function () {
    * @return {Promise}
    */
   function Postmate(_temp) {
-    var _ref2 = _temp === void 0 ? userOptions : _temp,
-        _ref2$container = _ref2.container,
-        container = _ref2$container === void 0 ? typeof container !== 'undefined' ? container : document.body : _ref2$container,
-        model = _ref2.model,
-        url = _ref2.url;
+    var _ref = _temp === void 0 ? userOptions : _temp,
+        _ref$container = _ref.container,
+        container = _ref$container === void 0 ? typeof container !== 'undefined' ? container : document.body : _ref$container,
+        model = _ref.model,
+        url = _ref.url;
 
     // eslint-disable-line no-undef
     this.parent = window;
