@@ -10,3 +10,4 @@ coverage/
 coverage.lcov
 coverage_*/
 yarn.lock
+build/
