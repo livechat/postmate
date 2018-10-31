@@ -1,9 +1,10 @@
+/* eslint-disable no-console */
 import {
   ChildAPI,
   log,
   maxHandshakeRequests,
-  messageId,
-  message_type,
+  generateNewMessageId,
+  messageType,
   ParentAPI,
   Postmate,
   resolveOrigin,
@@ -11,8 +12,29 @@ import {
   sanitize,
 } from '../../src/postmate'
 
-// Jest works
-test('Jest is working', () => expect(1).toBe(1))
+test('Message Type', () => expect(messageType).toBe('application/x-postmate-v1+json'))
+
+test('messageId', () => expect(!isNaN(generateNewMessageId())).toBe(true))
+
+test('generateNewMessageId adds 1', () => {
+  const result = generateNewMessageId()
+  expect(result).toBe(2)
+})
+
+test('postmate logs args', () => {
+  Postmate.debug = true
+  console.log = jest.fn()
+  log('a', 'b', 'c')
+  expect(typeof log !== 'undefined')
+  expect(typeof log).toBe('function')
+  expect(console.log.mock.calls[0][0]).toBe('a')
+  expect(console.log.mock.calls[0][1]).toBe('b')
+  expect(console.log.mock.calls[0][2]).toBe('c')
+})
+
+test('Sanitize', () => {
+  expect(typeof sanitize !== 'undefined')
+})
 
 // test API
 // the tests below test the API generally
@@ -29,11 +51,6 @@ test('ChildAPI class is ready to rock', () => {
   expect(typeof ChildAPI !== 'undefined')
   expect(typeof ChildAPI).toBe('function')
   expect(typeof ChildAPI.emit !== 'undefined')
-})
-
-test('log func is ready to rock', () => {
-  expect(typeof log !== 'undefined')
-  expect(typeof log).toBe('function')
 })
 
 test('maxHandshakeRequests class is ready to rock', () => {
@@ -55,6 +72,9 @@ test('ParentAPI class is ready to rock', () => {
 
 test('resolveOrigin class is ready to rock', () => {
   expect(typeof resolveOrigin !== 'undefined')
+  const result = 'https://sometest.com'
+  const a = resolveOrigin(result)
+  expect(a).toEqual(result)
 })
 
 test('resolveValue class is ready to rock', () => {
@@ -85,6 +105,7 @@ test('ChildAPI mocking', () => {
     parent: document.body,
     parentOrigin: 'https://parent.com',
     child: document.body,
+    source: window,
   }
   const childMock = new ChildAPI(info)
   expect(typeof childMock).toBe('object')
@@ -97,6 +118,7 @@ test('ParentAPI mocking', () => {
     parent: document.body,
     parentOrigin: 'https://parent.com',
     child: document.body,
+    source: window,
   }
   const parentMock = new ParentAPI(info)
   expect(typeof parentMock).toBe('object')

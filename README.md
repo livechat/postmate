@@ -2,10 +2,10 @@
   <img src="https://dollarshaveclub.github.io/postmate/assets/postmate-v3.svg">
 </a>
 
-> A powerful, simple, promise-based `postMessage` library.
+> A powerful, simple, promise-based `postMessage` iFrame communication library.
 
 [![npm][npm-image]][npm-url]
-[![Build Status](https://travis-ci.org/dollarshaveclub/postmate.svg?branch=master)](https://travis-ci.org/dollarshaveclub/postmate)
+[![CircleCI](https://circleci.com/gh/dollarshaveclub/postmate.svg?style=svg)](https://circleci.com/gh/dollarshaveclub/postmate)
 [![Share](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/home?status=Postmate%3A%20A%20powerful,%20simple,%20promise-based%20postMessage%20library%20https%3A//github.com/dollarshaveclub/postmate%20via%20%40DSCEngineering%20%40javascript)
 
 [npm-image]: https://badge.fury.io/js/postmate.svg
@@ -34,10 +34,12 @@ You can download the compiled javascript directly [here](/build/postmate.min.js)
 * Child emits events that the parent can listen to.
 * Parent can `call` functions within a `child`
 * *Zero* dependencies. Provide your own polyfill or abstraction for the `Promise` API if needed.
-* Lightweight, weighing in at ~ <span class="size">`1.5kb`</span> (minified & gzipped).
+* Lightweight, weighing in at ~ <span class="size">`1.6kb`</span> (minified & gzipped).
+
+NOTE: While the underlying mechanism is [window.postMessage()](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage), only iFrame is supported.
 
 ## Installing
-Postmate can be installed via NPM or Bower.
+Postmate can be installed via NPM.
 
 **NPM**
 ```bash
@@ -68,6 +70,7 @@ $ npm i postmate --save # Install via NPM
 const handshake = new Postmate({
   container: document.getElementById('some-div'), // Element to inject frame into
   url: 'http://child.com/page.html' // Page to load, must have postmate.js. This will also be the origin used for communication.
+  classListArray: ["myClass"] //Classes to add to the iframe via classList, useful for styling.
 });
 
 // When parent <-> child handshake is complete, data may be requested from the child
@@ -134,11 +137,12 @@ new Postmate(options);
 new Postmate({
   container: document.body,
   url: 'http://child.com/',
+  classListArray: ["myClass"]
   model: { foo: 'bar' }
 });
 ```
 
-> This is written in the parent page. Initiates a connection with the child. Returns a Promise that signals when the handshake is complete and communication is ready to begin.
+> This is written in the parent page.  Creates an iFrame at the specified `url`. Initiates a connection with the child. Returns a Promise that signals when the handshake is complete and communication is ready to begin.
 
 **Returns**: Promise(child)
 
@@ -148,6 +152,7 @@ new Postmate({
 | --- | --- | --- | --- |
 | **`container`** (optional) | `DOM Node Element` | _An element to append the iFrame to_ | `document.body`
 **`url`** | `String` | _A URL to load in the iFrame. The origin of this URL will also be used for securing message transport | none_ |
+**`classListArray`** | `Array` | _An Array to add classes to the iFrame. Useful for styling | none_ |
 **`model`** | `Object` | _An object literal to represent the default values of the Childs model_ | none |
 
 ---
@@ -166,7 +171,9 @@ new Postmate.Model({
 });
 ```
 
-> This is written in the child page. Calling `Postmate.Model` initiates a handshake request listener from the `Parent`. Once the handshake is complete, an event listener is bound to receive requests from the `Parent`. The `Child` model is _extended_ from the `model` provided by the `Parent`.
+> This is written in the child page. Calling `Postmate.Model` initiates a handshake request listener from the `Child`. Once the handshake is complete, an event listener is bound to receive requests from the `Parent`. The `Child` model is _extended_ from the `model` provided by the `Parent`.
+
+**Returns**: Promise(handshakeMeta)
 
 #### Parameters
 
