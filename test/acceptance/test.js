@@ -15,6 +15,19 @@ describe('postmate', function () {
     })
   })
 
+  it('should run callback when invalid reply message was received', function (done) {
+    new Postmate({
+      container: document.getElementById('frame'),
+      url: 'http://localhost:9000/child.html',
+      invalidReplyMessageCallback: function (frame, e) {
+        expect(e.data.name).to.equal('invalid_message')
+        done()
+      },
+    }).then(function (child) {
+      child.destroy()
+    })
+  })
+
   it('should have classes', function (done) {
     new Postmate({
       container: document.getElementById('frame'),
