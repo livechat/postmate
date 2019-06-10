@@ -38,8 +38,6 @@
       var setRandomId = function (data) { randomId = data; };
       var getRandomId = function () { return randomId; };
 
-      parent.postMessage({name: 'invalid_message'}, '*');
-
       new Postmate.Model({
         height: height,
         foo: foo,

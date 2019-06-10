@@ -254,7 +254,6 @@ class Postmate {
     model,
     url,
     classListArray = [],
-    invalidReplyMessageCallback,
   }) { // eslint-disable-line no-undef
     this.parent = window
     this.frame = document.createElement('iframe')
@@ -262,7 +261,6 @@ class Postmate {
     container.appendChild(this.frame)
     this.child = this.frame.contentWindow || this.frame.contentDocument.parentWindow
     this.model = model || {}
-    this.invalidReplyMessageCallback = invalidReplyMessageCallback
 
     return this.sendHandshake(url)
   }
@@ -278,13 +276,7 @@ class Postmate {
     let responseInterval
     return new Postmate.Promise((resolve, reject) => {
       const reply = (e) => {
-        if (!sanitize(e, childOrigin)) {
-          if (this.invalidReplyMessageCallback) {
-            this.invalidReplyMessageCallback(this.frame, e)
-          }
-
-          return false
-        }
+        if (!sanitize(e, childOrigin)) return false
         if (e.data.postmate === 'handshake-reply') {
           clearInterval(responseInterval)
           if (process.env.NODE_ENV !== 'production') {
