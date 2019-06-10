@@ -324,7 +324,7 @@ class Postmate {
       if (this.frame.attachEvent) {
         this.frame.attachEvent('onload', loaded)
       } else {
-        this.frame.onload = loaded
+        this.frame.addEventListener('load', loaded)
       }
 
       if (process.env.NODE_ENV !== 'production') {
