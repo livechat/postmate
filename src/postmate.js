@@ -254,9 +254,13 @@ class Postmate {
     container = typeof container !== 'undefined' ? container : document.body, // eslint-disable-line no-use-before-define
     model,
     url,
+    allowVideoConferencing = false,
   }) { // eslint-disable-line no-undef
     this.parent = window
     this.frame = document.createElement('iframe')
+    if (allowVideoConferencing) {
+      this.frame.allow = 'microphone *; camera *;'
+    }
     container.appendChild(this.frame)
     this.child = this.frame.contentWindow || this.frame.contentDocument.parentWindow
     this.model = model || {}
