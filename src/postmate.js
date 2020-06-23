@@ -257,6 +257,7 @@ class Postmate {
   }) { // eslint-disable-line no-undef
     this.parent = window
     this.frame = document.createElement('iframe')
+    this.frame.allow = ''
     container.appendChild(this.frame)
     this.child = this.frame.contentWindow || this.frame.contentDocument.parentWindow
     this.model = model || {}
