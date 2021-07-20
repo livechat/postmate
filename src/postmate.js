@@ -254,7 +254,7 @@ class Postmate {
     container = typeof container !== 'undefined' ? container : document.body, // eslint-disable-line no-use-before-define
     model,
     url,
-    iframeAllowedProperties = '',
+    iframeAllowedProperties,
   }) { // eslint-disable-line no-undef
     this.parent = window
     this.frame = document.createElement('iframe')
