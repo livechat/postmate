@@ -3,7 +3,6 @@ node_modules
 ssl/*.pem
 .DS_Store
 tests/.DS_Store
-.nyc_output/
 coverage
 coverage/
 coverage.lcov

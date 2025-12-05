@@ -1,14 +1,14 @@
 {
-  "presets": [
-    ["@babel/preset-env", {
-      "loose": true,
-      "targets": {
-        "browsers": [
-          "defaults",
-          "ie >= 11"
-        ]
-      }
-    }]
-  ],
-  "plugins": [["@babel/plugin-proposal-class-properties", { "loose": true }]]
+	"presets": [
+		[
+			"@babel/preset-env",
+			{
+				"loose": true,
+				"targets": {
+					"browsers": ["defaults", "ie >= 11"]
+				}
+			}
+		]
+	],
+	"plugins": [["@babel/plugin-transform-class-properties", { "loose": true }]]
 }

@@ -1,20 +1,15 @@
-import {
-  author,
-  description,
-  homepage,
-  license,
-  name,
-  version,
-} from '../package.json'
+import pkg from "../package.json" assert { type: "json" };
 
-const loose = true
+const { author, description, homepage, license, name, version } = pkg;
+
+const loose = true;
 
 const babelSetup = {
-  babelrc: false,
-  presets: [['@babel/preset-env', { modules: false, loose }]],
-  plugins: [['@babel/plugin-proposal-class-properties', { loose }]],
-  exclude: 'node_modules/**',
-}
+	babelrc: false,
+	presets: [["@babel/preset-env", { modules: false, loose }]],
+	plugins: [["@babel/plugin-transform-class-properties", { loose }]],
+	exclude: "node_modules/**",
+};
 
 const banner = `/**
   ${name} - ${description}
@@ -22,11 +17,6 @@ const banner = `/**
   @link ${homepage}
   @author ${author}
   @license ${license}
-**/`
+**/`;
 
-export {
-  babelSetup,
-  banner,
-  name,
-  version,
-}
+export { babelSetup, banner, name, version };
