@@ -36,6 +36,8 @@
 		"build": "npm run build:dist && npm run build:readme",
 		"build:readme": "node ./scripts/update-readme.js",
 		"build:dist": "rollup --config configs/rollup.config.js",
+    	"prepublishOnly": "./scripts/prepublish-package.sh",
+		"prepare": "npm run build",
 		"postpublish": "git push --follow-tags"
 	},
 	"repository": {
