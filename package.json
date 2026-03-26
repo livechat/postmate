@@ -1,6 +1,6 @@
 {
 	"name": "@livechat/postmate",
-	"version": "3.1.2",
+	"version": "3.1.3",
 	"description": "A powerful, simple, promise-based postMessage library",
 	"type": "module",
 	"main": "build/postmate.js",
@@ -18,7 +18,7 @@
 		"@eslint/js": "^9.39.1",
 		"@rollup/plugin-babel": "^6.1.0",
 		"@rollup/plugin-replace": "^6.0.3",
-		"@rollup/plugin-terser": "^0.4.4",
+		"@rollup/plugin-terser": "^1.0.0",
 		"es-check": "^9.5.2",
 		"eslint": "^9.39.1",
 		"globals": "^16.5.0",
